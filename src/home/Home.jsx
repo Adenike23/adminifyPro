@@ -39,12 +39,13 @@ const Home = () => {
     }
 
     const getUsers = async() => {
+      setLoading(true)
         const response = await fetch('https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json')
         const data = await response.json()
-        setLoading(true)
         if(response.ok){
             setUsers(data)
         }
+        if(response) setLoading(false)
         console.log(response);
         console.log(data);
     }
@@ -118,12 +119,12 @@ const Home = () => {
             <button onClick={handleDeleteSelected} disabled={selectedRows.length === 0} className='btn text-red-600 text-2xl bg-white border-gray-200'><MdDelete/></button>
         </div>
         {deleted && <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-200 dark:bg-gray-800 dark:text-red-400" role="alert">
-            <span class="flex justify-center font-medium">User(s) deleted.</span>
+            <span class="flex justify-center font-medium">Deleted.</span>
         </div>}
             <div className="overflow-x-auto">
             <table className="table">
         {/* head */}
-          {loading ? <div className='loader btn glass text-white m-3 block w-[95%]'><i class="fa-solid fa-spinner fa-spin"></i></div> : ''}
+          {loading && <div className='absolute left-[50%] -translate-x-[50%] -translate-y-[50%] top-[30%] text-3xl'><i class="fa-solid fa-spinner fa-spin"></i></div>}
         <thead>
         <tr className='text-blue-400 text-lg'>
             <th><input
